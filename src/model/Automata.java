@@ -46,25 +46,27 @@ public class Automata {
 
     public String imprimir() {
 
-        String result = "";
+        String result = "AFN Generado: \n";
         Iterator it = this.listaEstados.getIterator();
         while (it.hasNext()) {
             Estado e = (Estado) it.next();
-            result += "\nE." + e.getId();
-
+            result += "\n";
             if (e.isEstadoinicial()) {
-                result += "(ini)";
+                result += ">";
             }
             if (e.isEstadofinal()) {
-                result += "(fin)";
+                result += "(";
+            }
+            result += "(" + e.getId() + ")";
+            if (e.isEstadofinal()) {
+                result += ")";
             }
             result += "\n";
 
             Iterator itenlaces = e.getEnlaces().getIterator();
             while (itenlaces.hasNext()) {
                 Arco enlace = (Arco) itenlaces.next();
-                result += "\t"
-                        + enlace.getOrigen().getId() + " ---" + enlace.getEtiqueta() + "---> " + enlace.getDestino().getId() + "\n";
+                result += " ---" + enlace.getEtiqueta() + "---> " + enlace.getDestino().getId() + "\n";
             }
         }
         return result;
@@ -113,7 +115,7 @@ public class Automata {
         AFDMin
     }
 
-    public static final String EMPTY = " [ empty ] ";
+    public static final String EMPTY = "λ";// "ε";
     public int tipoAutomata;
     private ListaEstados listaEstados;
     private ListaEstados listaEstadosFinales;

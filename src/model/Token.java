@@ -27,6 +27,7 @@ public class Token implements Comparable<Token> {
      * <li><b>-1 (Menos Uno)</b> si no son iguales </li>
      * </ul>
      */
+    @Override
     public int compareTo(Token t) {
         if (this.getTipo() == t.getTipo()
                 && this.getValor().compareTo(t.getValor()) == 0) {
@@ -89,14 +90,14 @@ public class Token implements Comparable<Token> {
 
     public enum TipoToken {
 
-        NONE, // token erróneo
-        KLEENE, // '*' --> cerradura de kleene
-        PLUS, // '+' --> cerradura positiva de kleene
-        CEROUNO, // '?' --> Cero o una instancia
-        OR, // '|' --> Disyunción
-        PARI, // '(' --> Paréntesis izquierdo
-        PARD, // ')' --> Paréntesis derecho
-        ALFA, // Cualquier letra del alfabeto
+        NONE,       // token erróneo
+        KLEENE,     // '*' --> cerradura de kleene
+        PLUS,       // '+' --> cerradura positiva de kleene
+        CEROUNO,    // '?' --> Cero o una instancia
+        OR,         // '|' --> Disyunción
+        PARI,       // '(' --> Paréntesis izquierdo
+        PARD,       // ')' --> Paréntesis derecho
+        ALFA,       // Cualquier letra del alfabeto
         FIN         // Fin de la expresión regular
     }
 

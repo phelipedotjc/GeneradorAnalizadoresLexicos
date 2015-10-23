@@ -43,6 +43,8 @@ public class MainFrame extends javax.swing.JFrame {
         lblRegEx = new javax.swing.JLabel();
         tfAlpha = new javax.swing.JTextField();
         tfRegEx = new javax.swing.JTextField();
+        scrollPane = new javax.swing.JScrollPane();
+        taResult = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Generador Analizadores Lexicos v0.1");
@@ -69,6 +71,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         lblRegEx.setText("Expresión Regular:");
 
+        taResult.setColumns(20);
+        taResult.setRows(5);
+        scrollPane.setViewportView(taResult);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,6 +82,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane)
                     .addComponent(lblMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,7 +119,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDoAFN)
                     .addComponent(btnClear))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -122,42 +131,33 @@ public class MainFrame extends javax.swing.JFrame {
 
         //Generacion del AFN
         Thompson afn;
-
         boolean Errors;
 
+        taResult.setText(null);
         System.out.println("INFO: Generando AFN...");
-
         Analizador traductor = new Analizador(tfRegEx.getText(), tfAlpha.getText());
-
         Errors = traductor.isError();
 
         if (Errors) {
-
             System.err.println("ERROR: " + traductor.getErrMsg());
-
         } else {
-
             afn = traductor.traducir();
             Errors = traductor.isError();
 
-            if (Errors) {
-                
+            if (Errors) { 
                 System.err.println("ERROR: " + traductor.getErrMsg());
-                
             } else {
-                
                 System.out.println("INFO: AFN Generado con éxito");
                 System.out.println(afn.imprimir());
-                
+                taResult.setText(afn.imprimir());
             }
-            
         }
-
     }//GEN-LAST:event_btnDoAFNActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         tfAlpha.setText(null);
         tfRegEx.setText(null);
+        taResult.setText(null);
     }//GEN-LAST:event_btnClearActionPerformed
 
     /**
@@ -177,7 +177,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblAlpha;
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblRegEx;
+    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JSeparator separator;
+    private javax.swing.JTextArea taResult;
     private javax.swing.JTextField tfAlpha;
     private javax.swing.JTextField tfRegEx;
     // End of variables declaration//GEN-END:variables
