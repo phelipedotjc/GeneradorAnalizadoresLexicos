@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
+ * Cojunto de simbolos no repetidos ordenados en una lista sobre el cual se define un lenguaje
  * @author Grupo 7 - Lenguajes UNAL
  */
 public class Alfabeto extends ArrayList<String>  {
 
     /**
-     * Constructor del alfabeto: lista de simbolos como string (ArrayList<String>)
+     * Constructor del alfabeto: lista de simbolos como string (ArrayList\<String\>)
      * @param simbolos Cadena de caracteres, en la que cada carcater es un simbolo permitido
      */
     public Alfabeto(String simbolos) {

@@ -261,7 +261,7 @@ public final class Analizador {
         Thompson nuevo = null;
         try {
             if (preanalisis.getTipo() != TipoToken.FIN) {
-                nuevo = new Thompson(preanalisis.getValor(), TipoAutomata.AFN.ordinal());
+                nuevo = new Thompson(preanalisis.getValor(), TipoAutomata.AFN);
                 this.matching(preanalisis.getValor());
             }
         } catch (LexicalError ex) {
