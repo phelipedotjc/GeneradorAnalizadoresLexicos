@@ -149,6 +149,10 @@ public class Automata {
         this.alphabet = alpha;
     }
 
+    public ArrayList<String> getAlphabet() {
+        return alphabet;
+    }
+
     /**
      * Establece la expresion regular que representa el automata finito
      *
@@ -157,7 +161,32 @@ public class Automata {
     public void setRegex(String regex) {
         this.regex = regex;
     }
+    
+    public Estado getEstadoById(int id) {
+        return this.listaEstados.getEstadoById(id);
+    }
+    
+    public void addEstado(Estado e) {
+        this.listaEstados.insertar(e);
+    }
+    
+    public ListaEstados getFinales() {
+        return listaEstadosFinales;
+    }
+    
+    public void setInicial(Estado ini) {
+        this.estadoInicial = ini;
+    }
+    
+    public Estado getInicial() {
+        return estadoInicial;
+    }
+ 
+    public String getRegex() {
+        return this.regex;
+    }
 
+    
     /**
      * Tipos de Automatas:
      * <ul>

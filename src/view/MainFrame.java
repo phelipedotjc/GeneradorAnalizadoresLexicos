@@ -10,6 +10,7 @@
  */
 package view;
 
+import generadoranalizadoreslexicos.GeneradorAnalizadoresLexicos;
 import model.Analizador;
 import model.Thompson;
 
@@ -129,29 +130,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnDoAFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoAFNActionPerformed
 
-        //Generacion del AFN
-        Thompson afn;
-        boolean Errors;
-
         taResult.setText(null);
         System.out.println("INFO: Generando AFN...");
-        Analizador traductor = new Analizador(tfRegEx.getText(), tfAlpha.getText());
-        Errors = traductor.isError();
-
-        if (Errors) {
-            System.err.println("ERROR: " + traductor.getErrMsg());
-        } else {
-            afn = traductor.traducir();
-            Errors = traductor.isError();
-
-            if (Errors) { 
-                System.err.println("ERROR: " + traductor.getErrMsg());
-            } else {
-                System.out.println("INFO: AFN Generado con éxito");
-                System.out.println(afn.imprimir());
-                taResult.setText(afn.imprimir());
-            }
-        }
+        Thompson afn = GeneradorAnalizadoresLexicos.getInstance().generateAFN(tfRegEx.getText(), tfAlpha.getText());
+        taResult.setText(afn.imprimir());
     }//GEN-LAST:event_btnDoAFNActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed

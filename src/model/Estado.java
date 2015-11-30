@@ -62,6 +62,18 @@ public class Estado implements Comparable<Estado> {
     public Arco getEnlaceSimboloFromHash(String simbolo) {
         return this.enlaces.getEnlaceSimbolo(simbolo);
     }
+    
+    /**
+     * Establece si el estado fue o no visitado en un recorrido
+     * @param visitado Boolean que establece si el estado fue o no visitado en un recorrido
+     */
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
+    }
+
+    public boolean isVisitado() {
+        return visitado;
+    }
 
     /**
      * Obtener Id del Estado
