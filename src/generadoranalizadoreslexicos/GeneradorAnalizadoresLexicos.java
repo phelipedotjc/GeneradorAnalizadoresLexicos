@@ -60,8 +60,6 @@ public class GeneradorAnalizadoresLexicos {
             }
         }
         this.AFN = afn;
-        
-        generateAFD();
         return afn;
     }
 
