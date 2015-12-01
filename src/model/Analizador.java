@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import model.Automata.TipoAutomata;
 import model.Token.TipoToken;
 import model.exeptions.LexicalError;
@@ -26,34 +27,36 @@ public final class Analizador {
     /**
      * Constructor del Analizador Sintactico
      *
-     * @param regex Expresión regular de la cual queremos generar el AFN
+     * @param regex Expresión regular de la cual se quiere generar el AFN
      * @param alfabeto Alfabeto sobre el cual esta definida la expresión regular
      */
     public Analizador(String regex, String alfabeto) {
         this.setPosicion(0);
-        this.regex = regex; // se guarda la expreion regular
+        this.regex = regex; // se guarda la expresion regular
         this.alfabeto = new Alfabeto(alfabeto); // creamos el alfabeto   
-        this.lexico = new Lexico(regex, this.alfabeto); // creamos el analizador léxico
+        this.lexico = new Lexico(regex, this.alfabeto); // creamos el léxico
         try {
             this.preanalisis = nextSymbol(); // obtenemos el primer símbolo desde el analizador léxico
         } catch (LexicalError ex) {
             this.error = true;
-            this.errMsg += "Error FATAL en el traductor. La generación del AFN no puede continuar: " + ex.getMessage() + "\n";
+            this.errMsg.add("Error FATAL en el traductor. La generación del AFN no puede continuar: " + ex.getMessage());
         }
         automata = new Thompson();
     }
 
+    /**
+     * Genera el Automata Finito No Determinista
+     *
+     */
     public Thompson traducir() {
         this.automata = this.simboloInicial();
-
         if (!this.isError()) {
             if (preanalisis.getTipo() != TipoToken.FIN) {
                 this.error = true;
-                this.errMsg += "Quedaron caracteres sin analizar debido al siguiente Token no esperado["
-                        + this.getPosicion() + "]: " + preanalisis.getValor() + "\n";
+                this.errMsg.add("Quedaron caracteres sin analizar debido al siguiente Token no esperado["
+                        + this.getPosicion() + "]: " + preanalisis.getValor());
             }
         }
-
         return this.automata;
     }
 
@@ -81,7 +84,7 @@ public final class Analizador {
             }
         } catch (LexicalError ex) {
             this.error = true;
-            this.errMsg = "Error FATAL en el traductor. La generación del AFN no puede continuar\n" + ex.getMessage();
+            this.errMsg.add("Error FATAL en el traductor. La generación del AFN no puede continuar\n" + ex.getMessage());
             System.out.println(this.getErrMsg());
         }
         if (!(this.error)) {
@@ -277,12 +280,11 @@ public final class Analizador {
 
     /**
      * Llamada al analizador léxico para obtener el siguiente caracter de la
-     * cadena de entrada. Si el analizador léxico encuentra un error (como que
-     * el caracter no pertenece al alfabeto) se atrapa la excepción, se informa
-     * en la salida y se aborta el análisis. <br><br>
-     *
+     * cadena de entrada.
      * @return Token que contiene el símbolo siguiente a procesar
-     * @exception LexicalError
+     * @exception LexicalError Si el analizador léxico encuentra un error (como
+     * que el caracter no pertenece al alfabeto) se atrapa la excepción, se
+     * informa en la salida y se aborta el análisis.
      */
     private Token nextSymbol() throws LexicalError {
         Token result;
@@ -335,7 +337,7 @@ public final class Analizador {
         return error;
     }
 
-    public String getErrMsg() {
+    public ArrayList<String> getErrMsg() {
         return errMsg;
     }
 
@@ -347,5 +349,5 @@ public final class Analizador {
     private String Special;
     private int posicion;
     private boolean error = false;
-    private String errMsg = "";
+    private ArrayList<String> errMsg = new ArrayList();
 }

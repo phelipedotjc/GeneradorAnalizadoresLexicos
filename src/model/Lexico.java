@@ -8,34 +8,38 @@ import model.exeptions.LexicalError;
  */
 public class Lexico {
 
+    /**
+     * Constructor del lexico
+     *
+     * @param regex Expresion regular
+     * @param alfabeto Alfabeto
+     */
     public Lexico(String regex, Alfabeto alfabeto) {
         this.regex = new StringBuffer(regex);
         this.alphabet = alfabeto;
         this.specials = "*+?|()";
     }
 
-//    /**
-//     * Consume la entrada y devuelve el siguiente a procesar. Si no se trata de
-//     * un token que pertenezca al alfabeto, entonces se lanza una Excepción.
-//     *
-//     * @return El siguiente caracter de la expresión regular
-//     * @throws java.lang.Exception Se lanza una excepción si el siguiente símbolo
-//     *                             no pertenece al alfabeto o a alguno de los
-//     *                             símbolos conocidos
-//     */
+    /**
+     * Consume la entrada y devuelve el siguiente a procesar. Si no se trata de
+     * un token que pertenezca al alfabeto, entonces se lanza una Excepción.
+     *
+     * @return El siguiente caracter de la expresión regular
+     * @throws LexicalError Se lanza una excepción si el siguiente símbolo no
+     * pertenece al alfabeto o a alguno de los símbolos conocidos
+     */
     public Token next() throws LexicalError {
         String s = consume();
         Token siguiente;
 
+        // Los espacios y tabuladores se ignoran
         if (s.equalsIgnoreCase(" ") || s.equalsIgnoreCase("\t")) {
-            // Los espacios y tabuladores se ignoran
             siguiente = next();
-
-        } else if (this.specials.contains(s) || this.alphabet.contiene(s)
-                || s.length() == 0) {
+        } else 
             //verifica que sea un simbolo, un valor del alfabeto o un caracter vacio (terminacion)
+            if (this.specials.contains(s) || this.alphabet.contiene(s)
+                || s.length() == 0) {  
             siguiente = new Token(s);
-
         } else {
             String except = "Simbolo no valido [ " + s + " ]";
             throw new LexicalError(except);
@@ -45,9 +49,8 @@ public class Lexico {
     }
 
     /**
-     * Extrae la primera letra de la regex y la devuelve como un String.
-     *
-     * @return El siguiente caracter en la regex
+     * Extrae la primera letra de la expresion regular y la devuelve como un String.
+     * @return El siguiente caracter en la expresion regular
      */
     private String consume() {
 

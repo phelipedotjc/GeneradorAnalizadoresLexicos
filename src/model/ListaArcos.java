@@ -55,6 +55,24 @@ public class ListaArcos extends ArrayList<Arco> {
     }
 
     /**
+     * Eliminar un estado del conjunto.
+     *
+     * @param e Estado a eliminar
+     */
+    public void borrar(Arco e) {
+
+        String simbolo = e.getEtiqueta();
+
+        this.remove(e);
+
+        if (e.isVacio()) {
+            this.getVacios().remove(e);
+        } else {
+            TablaEnlaces.remove(simbolo);
+        }
+    }
+
+    /**
      * Permite insertar un nuevo enlace cuya etiqueta es VACIO en la lista de
      * vacios
      *

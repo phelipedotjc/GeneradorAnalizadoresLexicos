@@ -103,6 +103,25 @@ public class Automata {
         }
         return result;
     }
+    
+    public void eliminarIslas() {
+        for (Estado e : this.getEstados()) {
+            if (e.esIsla()) {
+                eliminarEstado(e);
+            }
+        }
+    }
+    
+    private void eliminarEstado(Estado e) {
+        for (Estado est : this.listaEstados) {
+            for (Arco enlace : est.getEnlaces()) {
+                if (e.getId() != est.getId() && enlace.getDestino().getId()
+                        == e.getId()) {
+                    est.eliminarEnlace(enlace);
+                }
+            }
+        }
+    }
 
     /**
      * Obtiene el estado inicial del Automata (unico)
@@ -184,6 +203,16 @@ public class Automata {
  
     public String getRegex() {
         return this.regex;
+    }
+    
+    public ListaEstados getNoFinales() {
+        ListaEstados lista = new ListaEstados();
+        for (Estado x : listaEstados) {
+            if (!x.isEstadofinal()) {
+                lista.insertar(x);
+            }
+        }
+        return lista;
     }
 
     

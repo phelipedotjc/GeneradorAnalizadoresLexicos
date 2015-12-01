@@ -1,17 +1,10 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * MainFrame.java
  *
- * Created on 22/10/2015, 11:38:18 AM
+ * @author Grupo 7 - Lenguajes UNAL
  */
 package view;
 
 import generadoranalizadoreslexicos.GeneradorAnalizadoresLexicos;
-import model.Analizador;
 import model.Thompson;
 
 /**
@@ -47,10 +40,14 @@ public class MainFrame extends javax.swing.JFrame {
         scrollPane = new javax.swing.JScrollPane();
         taResult = new javax.swing.JTextArea();
         btnDoAFD = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnDoAFDmin = new javax.swing.JButton();
+        lblToken = new javax.swing.JLabel();
+        tfToken = new javax.swing.JTextField();
+        btnAddToken = new javax.swing.JButton();
+        btnGenLexAn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Generador Analizadores Lexicos v0.2");
+        setTitle("Generador Analizadores Lexicos v0.3");
         setResizable(false);
 
         btnClear.setText("Reiniciar");
@@ -68,9 +65,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         lblMain.setFont(new java.awt.Font("Dialog", 1, 12));
-        lblMain.setText("Ingrese el alfabeto y la expresión regular:");
+        lblMain.setText("Ingrese el alfabeto, la expresión regular y el Token correspondiente:");
 
-        lblAlpha.setText("Alfabeto");
+        lblAlpha.setText("Alfabeto:");
 
         lblRegEx.setText("Expresión Regular:");
 
@@ -86,8 +83,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Generar AFD Min");
-        jButton1.setEnabled(false);
+        btnDoAFDmin.setText("Generar AFD Min");
+        btnDoAFDmin.setEnabled(false);
+        btnDoAFDmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoAFDminActionPerformed(evt);
+            }
+        });
+
+        lblToken.setText("Token:");
+
+        btnAddToken.setText("Agregar Token");
+
+        btnGenLexAn.setText("Generar Analizador Lexico");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,25 +104,30 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddToken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(scrollPane)
                     .addComponent(lblMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tfRegEx)
                     .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDoAFN, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnDoAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnDoAFDmin, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblRegEx)
+                            .addComponent(lblAlpha)
+                            .addComponent(lblToken))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfRegEx)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAlpha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(tfAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(tfToken)))
+                    .addComponent(btnGenLexAn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -127,10 +140,14 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(lblAlpha)
                     .addComponent(tfAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblRegEx)
-                .addGap(10, 10, 10)
-                .addComponent(tfRegEx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblRegEx)
+                    .addComponent(tfRegEx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblToken)
+                    .addComponent(tfToken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClear)
@@ -138,23 +155,31 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDoAFN)
                     .addComponent(btnDoAFD)
-                    .addComponent(jButton1))
+                    .addComponent(btnDoAFDmin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(btnAddToken)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGenLexAn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDoAFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoAFNActionPerformed
+    private Thompson AFN;
+    private Thompson AFD;
+    private Thompson AFDmin;
 
+    private void btnDoAFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoAFNActionPerformed
         taResult.setText(null);
         System.out.println("INFO: Generando AFN...");
-        Thompson afn = GeneradorAnalizadoresLexicos.getInstance().generateAFN(tfRegEx.getText(), tfAlpha.getText());
-        taResult.setText(afn.imprimir());
+        AFN = GeneradorAnalizadoresLexicos.getInstance().generateAFN(tfRegEx.getText(), tfAlpha.getText());
+        taResult.setText(AFN.imprimir());
         tfRegEx.setEnabled(false);
         tfAlpha.setEnabled(false);
+        btnDoAFN.setEnabled(false);
         btnDoAFD.setEnabled(true);
     }//GEN-LAST:event_btnDoAFNActionPerformed
 
@@ -164,15 +189,26 @@ public class MainFrame extends javax.swing.JFrame {
         taResult.setText(null);
         tfRegEx.setEnabled(true);
         tfAlpha.setEnabled(true);
+        btnDoAFN.setEnabled(true);
         btnDoAFD.setEnabled(false);
+        btnDoAFDmin.setEnabled(false);
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnDoAFDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoAFDActionPerformed
         taResult.setText(null);
         System.out.println("INFO: Generando AFD...");
-        Thompson afd = GeneradorAnalizadoresLexicos.getInstance().generateAFD();
-        taResult.setText(afd.imprimir());
+        AFD = GeneradorAnalizadoresLexicos.getInstance().generateAFD(AFN);
+        taResult.setText(AFD.imprimir());
+        btnDoAFD.setEnabled(false);
+        btnDoAFDmin.setEnabled(true);
     }//GEN-LAST:event_btnDoAFDActionPerformed
+
+    private void btnDoAFDminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoAFDminActionPerformed
+        taResult.setText(null);
+        System.out.println("INFO: Generando AFD min...");
+        AFDmin = GeneradorAnalizadoresLexicos.getInstance().generateAFDmin(AFD);
+        taResult.setText(AFDmin.imprimir());
+    }//GEN-LAST:event_btnDoAFDminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,17 +222,21 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToken;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDoAFD;
+    private javax.swing.JButton btnDoAFDmin;
     private javax.swing.JButton btnDoAFN;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnGenLexAn;
     private javax.swing.JLabel lblAlpha;
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblRegEx;
+    private javax.swing.JLabel lblToken;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JSeparator separator;
     private javax.swing.JTextArea taResult;
     private javax.swing.JTextField tfAlpha;
     private javax.swing.JTextField tfRegEx;
+    private javax.swing.JTextField tfToken;
     // End of variables declaration//GEN-END:variables
 }

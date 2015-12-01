@@ -4,10 +4,14 @@ import java.util.Iterator;
 
 /**
  *
- * @author markos
+ * @author Grupo 7 - Lenguajes UNAL
  */
 public class Thompson extends Automata {
 
+    /**
+     * Constructor del automata de Thompson
+     *
+     */
     public Thompson() {
         super();
     }
