@@ -94,6 +94,11 @@ public class MainFrame extends javax.swing.JFrame {
         lblToken.setText("Token:");
 
         btnAddToken.setText("Agregar Token");
+        btnAddToken.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTokenActionPerformed(evt);
+            }
+        });
 
         btnGenLexAn.setText("Generar Analizador Lexico");
 
@@ -179,6 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
         taResult.setText(AFN.imprimir());
         tfRegEx.setEnabled(false);
         tfAlpha.setEnabled(false);
+        tfToken.setEnabled(false);
         btnDoAFN.setEnabled(false);
         btnDoAFD.setEnabled(true);
     }//GEN-LAST:event_btnDoAFNActionPerformed
@@ -186,9 +192,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         tfAlpha.setText(null);
         tfRegEx.setText(null);
+        tfToken.setText(null);
         taResult.setText(null);
         tfRegEx.setEnabled(true);
         tfAlpha.setEnabled(true);
+        tfToken.setEnabled(true);
         btnDoAFN.setEnabled(true);
         btnDoAFD.setEnabled(false);
         btnDoAFDmin.setEnabled(false);
@@ -208,7 +216,25 @@ public class MainFrame extends javax.swing.JFrame {
         System.out.println("INFO: Generando AFD min...");
         AFDmin = GeneradorAnalizadoresLexicos.getInstance().generateAFDmin(AFD);
         taResult.setText(AFDmin.imprimir());
+        btnDoAFDmin.setEnabled(false);
     }//GEN-LAST:event_btnDoAFDminActionPerformed
+
+    private void btnAddTokenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTokenActionPerformed
+        taResult.setText(null);
+        System.out.println("INFO: Generando AFN...");
+        AFN = GeneradorAnalizadoresLexicos.getInstance().generateAFN(tfRegEx.getText(), tfAlpha.getText());
+        System.out.println("INFO: Generando AFD...");
+        AFD = GeneradorAnalizadoresLexicos.getInstance().generateAFD(AFN);
+        System.out.println("INFO: Generando AFD min...");
+        AFDmin = GeneradorAnalizadoresLexicos.getInstance().generateAFDmin(AFD);
+        taResult.setText("Token: \n<"+ tfToken.getText() +">\n\n"+ AFDmin.imprimir());
+        btnDoAFN.setEnabled(false);
+        btnDoAFD.setEnabled(false);
+        btnDoAFDmin.setEnabled(false);
+        tfRegEx.setEnabled(false);
+        tfAlpha.setEnabled(false);
+        tfToken.setEnabled(false);
+    }//GEN-LAST:event_btnAddTokenActionPerformed
 
     /**
      * @param args the command line arguments
